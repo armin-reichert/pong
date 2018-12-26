@@ -2,7 +2,6 @@ package de.amr.games.pong;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.DisplayMode;
 
 import de.amr.easy.game.Application;
 import de.amr.easy.game.assets.Assets;
@@ -31,7 +30,6 @@ public class PongGameApp extends Application implements ScreenManager {
 		settings.title = "Pong";
 		settings.width = 640;
 		settings.height = 480;
-		settings.fullScreenMode = new DisplayMode(640, 480, 32, DisplayMode.REFRESH_RATE_UNKNOWN);
 	}
 
 	@Override
