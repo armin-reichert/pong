@@ -5,7 +5,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.amr.gamaes.pong</groupId>
+	<groupId>de.amr.games.pong</groupId>
 	<artifactId>Pong</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Pong</name>
