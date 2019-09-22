@@ -106,6 +106,8 @@ public class PlayScreen implements View, Controller {
 			paddle[0] = new Paddle(VK_A, VK_Y);
 			paddle[1] = new Paddle(VK_UP, VK_DOWN);
 			break;
+		default:
+			throw new IllegalArgumentException("Unknown play mode: " + game.playMode);
 		}
 		IntStream.rangeClosed(0, 1).forEach(i -> {
 			paddle[i].setSize(15, 60);
@@ -152,7 +154,8 @@ public class PlayScreen implements View, Controller {
 		g.translate(0, -size.height / 2);
 		if (leftPlayerWins()) {
 			drawWinner(g, "Left Player wins!");
-		} else if (rightPlayerWins()) {
+		}
+		else if (rightPlayerWins()) {
 			drawWinner(g, "Right Player wins!");
 		}
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
@@ -181,7 +184,8 @@ public class PlayScreen implements View, Controller {
 		if (!isBallOutRight()) {
 			ball.tf.setPosition(paddle[0].tf.getX() + paddle[0].tf.getWidth(),
 					paddle[0].tf.getY() + paddle[0].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
-		} else {
+		}
+		else {
 			ball.tf.setPosition(paddle[1].tf.getX() - ball.tf.getWidth(),
 					paddle[1].tf.getY() + paddle[1].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
 		}
