@@ -89,18 +89,15 @@ public class MenuScreen implements Controller, View {
 		.endStateMachine();
 		//@formatter:on
 	}
-	
-	
+
 	public void setBgColor(Color bgColor) {
 		this.bgColor = bgColor;
 	}
-	
-	
+
 	public void setBgColorSelected(Color bgColorSelected) {
 		this.bgColorSelected = bgColorSelected;
 	}
-	
-	
+
 	public void setHilightColor(Color hilightColor) {
 		this.hilightColor = hilightColor;
 	}
@@ -120,7 +117,8 @@ public class MenuScreen implements Controller, View {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g.setColor(bgColor);
 		g.fillRect(0, 0, size.width, size.height);
 		g.setFont(new Font("Arial Black", Font.PLAIN, 28));
@@ -132,7 +130,8 @@ public class MenuScreen implements Controller, View {
 				g.setColor(bgColorSelected);
 				g.fillRect(0, h * i, size.width, h);
 				g.setColor(hilightColor);
-			} else {
+			}
+			else {
 				g.setColor(Color.WHITE);
 			}
 			String text = itemText(playModes[i]);
@@ -140,7 +139,8 @@ public class MenuScreen implements Controller, View {
 			g.drawString(text, size.width / 2 - w / 2, y);
 			y += h;
 		}
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+				RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 	}
 
 	private String itemText(PlayMode mode) {
@@ -153,7 +153,8 @@ public class MenuScreen implements Controller, View {
 			return "Player 1 - Computer";
 		case Player1_Player2:
 			return "Player 1 - Player 2";
+		default:
+			return "";
 		}
-		return "";
 	}
 }
