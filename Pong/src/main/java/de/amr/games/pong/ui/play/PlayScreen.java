@@ -31,7 +31,7 @@ import de.amr.games.pong.entities.Court;
 import de.amr.games.pong.entities.Paddle;
 import de.amr.games.pong.model.Game;
 import de.amr.games.pong.ui.ScreenManager;
-import de.amr.statemachine.StateMachine;
+import de.amr.statemachine.core.StateMachine;
 
 /**
  * The play view of the "Pong" game.

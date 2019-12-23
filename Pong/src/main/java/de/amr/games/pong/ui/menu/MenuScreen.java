@@ -21,7 +21,7 @@ import de.amr.easy.game.view.Controller;
 import de.amr.easy.game.view.View;
 import de.amr.games.pong.model.Game.PlayMode;
 import de.amr.games.pong.ui.ScreenManager;
-import de.amr.statemachine.StateMachine;
+import de.amr.statemachine.core.StateMachine;
 
 /**
  * The menu of the "Pong" game.
