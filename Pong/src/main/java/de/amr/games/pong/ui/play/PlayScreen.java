@@ -120,7 +120,6 @@ public class PlayScreen implements View, Lifecycle {
 	}
 
 	private void updateEntities() {
-		court.update();
 		ball.update();
 		paddle[0].update();
 		paddle[1].update();

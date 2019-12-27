@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
+import de.amr.easy.game.controller.Lifecycle;
 import de.amr.easy.game.entity.Entity;
 import de.amr.easy.game.input.Keyboard;
-import de.amr.easy.game.view.View;
 
-public class Paddle extends Entity implements View {
+public class Paddle extends Entity implements Lifecycle {
 
 	private final int upKey;
 	private final int downKey;
@@ -42,14 +42,20 @@ public class Paddle extends Entity implements View {
 	public void setBall(Ball ball) {
 		this.ball = ball;
 	}
+	
+	@Override
+	public void init() {
+	}
 
 	@Override
 	public void update() {
 		if (Keyboard.keyDown(upKey)) {
 			tf.setVelocityY(-speed);
-		} else if (Keyboard.keyDown(downKey)) {
+		}
+		else if (Keyboard.keyDown(downKey)) {
 			tf.setVelocityY(speed);
-		} else {
+		}
+		else {
 			tf.setVelocityY(0);
 		}
 		move();
@@ -59,7 +65,8 @@ public class Paddle extends Entity implements View {
 		tf.move();
 		if (tf.getY() < 0) {
 			tf.setY(0);
-		} else if (tf.getY() >= courtSize.height - tf.getHeight()) {
+		}
+		else if (tf.getY() >= courtSize.height - tf.getHeight()) {
 			tf.setY(courtSize.height - tf.getHeight());
 		}
 	}
