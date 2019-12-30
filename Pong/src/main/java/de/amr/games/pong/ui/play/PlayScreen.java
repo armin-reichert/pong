@@ -50,7 +50,7 @@ public class PlayScreen implements View, Lifecycle {
 		this.game = game;
 		this.size = size;
 		fsm = createStateMachine();
-		fsm.traceTo(Application.LOGGER, app().clock::getFrequency);
+		fsm.setLogger(Application.LOGGER);
 	}
 
 	private StateMachine<PlayState, Object> createStateMachine() {

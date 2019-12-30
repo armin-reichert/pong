@@ -1,7 +1,6 @@
 package de.amr.games.pong.ui.menu;
 
 import static de.amr.easy.game.Application.LOGGER;
-import static de.amr.easy.game.Application.app;
 import static de.amr.easy.game.input.Keyboard.keyPressedOnce;
 import static de.amr.games.pong.model.Game.PlayMode.Computer_Computer;
 import static de.amr.games.pong.model.Game.PlayMode.Computer_Player2;
@@ -41,7 +40,7 @@ public class MenuScreen implements Lifecycle, View {
 		this.screenManager = screenManager;
 		this.size = size;
 		fsm = createStateMachine();
-		fsm.traceTo(LOGGER, app().clock::getFrequency);
+		fsm.setLogger(LOGGER);
 	}
 
 	private StateMachine<PlayMode, Object> createStateMachine() {
@@ -117,8 +116,7 @@ public class MenuScreen implements Lifecycle, View {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g.setColor(bgColor);
 		g.fillRect(0, 0, size.width, size.height);
 		g.setFont(new Font("Arial Black", Font.PLAIN, 28));
@@ -130,8 +128,7 @@ public class MenuScreen implements Lifecycle, View {
 				g.setColor(bgColorSelected);
 				g.fillRect(0, h * i, size.width, h);
 				g.setColor(hilightColor);
-			}
-			else {
+			} else {
 				g.setColor(Color.WHITE);
 			}
 			String text = itemText(playModes[i]);
@@ -139,8 +136,7 @@ public class MenuScreen implements Lifecycle, View {
 			g.drawString(text, size.width / 2 - w / 2, y);
 			y += h;
 		}
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-				RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 	}
 
 	private String itemText(PlayMode mode) {
