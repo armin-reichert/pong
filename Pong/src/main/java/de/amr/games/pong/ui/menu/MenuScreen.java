@@ -16,8 +16,8 @@ import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 
 import de.amr.easy.game.controller.Lifecycle;
+import de.amr.easy.game.entity.Entity;
 import de.amr.easy.game.input.Keyboard;
-import de.amr.easy.game.view.View;
 import de.amr.games.pong.model.Game.PlayMode;
 import de.amr.games.pong.ui.ScreenManager;
 import de.amr.statemachine.core.StateMachine;
@@ -27,7 +27,7 @@ import de.amr.statemachine.core.StateMachine;
  * 
  * @author Armin Reichert
  */
-public class MenuScreen implements Lifecycle, View {
+public class MenuScreen extends Entity implements Lifecycle {
 
 	private final ScreenManager screenManager;
 	private final Dimension size;
