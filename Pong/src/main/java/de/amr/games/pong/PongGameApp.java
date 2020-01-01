@@ -5,6 +5,7 @@ import java.awt.Dimension;
 
 import de.amr.easy.game.Application;
 import de.amr.easy.game.assets.Assets;
+import de.amr.easy.game.config.AppSettings;
 import de.amr.games.pong.model.Game;
 import de.amr.games.pong.model.Game.PlayMode;
 import de.amr.games.pong.ui.ScreenManager;
@@ -16,7 +17,7 @@ import de.amr.games.pong.ui.play.PlayScreen;
  * 
  * @author Armin Reichert & Anna Schillo
  */
-public class PongGameApp extends Application implements ScreenManager {
+public class PongGameApp extends Application<AppSettings> implements ScreenManager {
 
 	public static void main(String[] args) {
 		launch(new PongGameApp(), args);
@@ -26,10 +27,13 @@ public class PongGameApp extends Application implements ScreenManager {
 	private MenuScreen menuScreen;
 	private PlayScreen playScreen;
 
-	public PongGameApp() {
+	@Override
+	public AppSettings createAppSettings() {
+		AppSettings settings = new AppSettings();
 		settings.title = "Pong";
 		settings.width = 640;
 		settings.height = 480;
+		return settings;
 	}
 
 	@Override
