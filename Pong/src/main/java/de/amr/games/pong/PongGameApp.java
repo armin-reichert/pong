@@ -46,7 +46,7 @@ public class PongGameApp extends Application<AppSettings> implements ScreenManag
 	@Override
 	public void selectMenuScreen() {
 		if (menuScreen == null) {
-			Dimension size = new Dimension(settings.width, settings.height);
+			Dimension size = new Dimension(settings().width, settings().height);
 			menuScreen = new MenuScreen(this, size);
 			menuScreen.setBgColor(Color.BLACK);
 			menuScreen.setBgColorSelected(Color.GRAY);
@@ -60,7 +60,7 @@ public class PongGameApp extends Application<AppSettings> implements ScreenManag
 	public void selectPlayScreen(PlayMode playMode) {
 		game.playMode = playMode;
 		if (playScreen == null) {
-			Dimension size = new Dimension(settings.width, settings.height);
+			Dimension size = new Dimension(settings().width, settings().height);
 			playScreen = new PlayScreen(this, game, size);
 		}
 		setController(playScreen);

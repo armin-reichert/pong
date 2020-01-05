@@ -62,7 +62,7 @@ public class PlayScreen extends Entity implements Lifecycle {
 	
 		.states()
 			.state(INIT).onEntry(this::initEntities)
-			.state(SERVING).timeoutAfter(() -> app().clock.sec(2)).onEntry(this::prepareService)
+			.state(SERVING).timeoutAfter(() -> app().clock().sec(2)).onEntry(this::prepareService)
 			.state(PLAYING).onTick(this::updateEntities)
 			.state(GAME_OVER)
 			
