@@ -17,7 +17,7 @@ import de.amr.games.pong.ui.play.PlayScreen;
  * 
  * @author Armin Reichert & Anna Schillo
  */
-public class PongGameApp extends Application<AppSettings> implements ScreenManager {
+public class PongGameApp extends Application implements ScreenManager {
 
 	public static void main(String[] args) {
 		launch(new PongGameApp(), args);
