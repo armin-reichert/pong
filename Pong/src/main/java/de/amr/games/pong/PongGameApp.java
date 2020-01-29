@@ -20,7 +20,7 @@ import de.amr.games.pong.ui.play.PlayScreen;
 public class PongGameApp extends Application implements ScreenManager {
 
 	public static void main(String[] args) {
-		launch(new PongGameApp(), args);
+		launch(PongGameApp.class, args);
 	}
 
 	private Game game;
@@ -28,12 +28,10 @@ public class PongGameApp extends Application implements ScreenManager {
 	private PlayScreen playScreen;
 
 	@Override
-	public AppSettings createAppSettings() {
-		AppSettings settings = new AppSettings();
+	protected void configure(AppSettings settings) {
 		settings.title = "Pong";
 		settings.width = 640;
 		settings.height = 480;
-		return settings;
 	}
 
 	@Override
