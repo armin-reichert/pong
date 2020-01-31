@@ -50,7 +50,7 @@ public class PlayScreen extends Entity implements Lifecycle {
 		this.game = game;
 		this.size = size;
 		fsm = createStateMachine();
-		fsm.setLogger(Application.LOGGER);
+		fsm.getTracer().setLogger(Application.LOGGER);
 	}
 
 	private StateMachine<PlayState, Object> createStateMachine() {

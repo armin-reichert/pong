@@ -40,7 +40,7 @@ public class MenuScreen extends Entity implements Lifecycle {
 		this.screenManager = screenManager;
 		this.size = size;
 		fsm = createStateMachine();
-		fsm.setLogger(LOGGER);
+		fsm.getTracer().setLogger(LOGGER);
 	}
 
 	private StateMachine<PlayMode, Object> createStateMachine() {
