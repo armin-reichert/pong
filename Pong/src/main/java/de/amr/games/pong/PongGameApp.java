@@ -37,7 +37,9 @@ public class PongGameApp extends Application implements ScreenManager {
 	@Override
 	public void init() {
 		game = new Game();
-		loadSounds();
+		Assets.sound("plop.mp3");
+		Assets.sound("plip.mp3");
+		Assets.sound("out.mp3");
 		selectMenuScreen();
 	}
 
@@ -49,7 +51,7 @@ public class PongGameApp extends Application implements ScreenManager {
 			menuScreen.setBgColor(Color.BLACK);
 			menuScreen.setBgColorSelected(Color.GRAY);
 			menuScreen.setHilightColor(Color.YELLOW);
-			menuScreen.init();
+			menuScreen.init(); // initialized only on creation
 		}
 		setController(menuScreen, false);
 	}
@@ -61,12 +63,6 @@ public class PongGameApp extends Application implements ScreenManager {
 			Dimension size = new Dimension(settings().width, settings().height);
 			playScreen = new PlayScreen(this, game, size);
 		}
-		setController(playScreen);
-	}
-
-	private void loadSounds() {
-		Assets.sound("plop.mp3");
-		Assets.sound("plip.mp3");
-		Assets.sound("out.mp3");
+		setController(playScreen); // initialized when selected
 	}
 }
