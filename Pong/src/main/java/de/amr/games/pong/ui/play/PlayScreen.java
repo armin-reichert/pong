@@ -22,8 +22,8 @@ import java.util.stream.IntStream;
 import de.amr.easy.game.Application;
 import de.amr.easy.game.assets.Assets;
 import de.amr.easy.game.controller.Lifecycle;
-import de.amr.easy.game.entity.Entity;
 import de.amr.easy.game.input.Keyboard;
+import de.amr.easy.game.view.View;
 import de.amr.games.pong.entities.AutoPaddleLeft;
 import de.amr.games.pong.entities.AutoPaddleRight;
 import de.amr.games.pong.entities.Ball;
@@ -34,29 +34,27 @@ import de.amr.games.pong.ui.ScreenManager;
 import de.amr.statemachine.core.StateMachine;
 
 /**
- * The play view of the "Pong" game.
+ * The play screen of the "Pong" game.
  * 
  * @author Armin Reichert
  */
-public class PlayScreen extends Entity implements Lifecycle {
+public class PlayScreen extends StateMachine<PlayState, Void> implements View, Lifecycle {
 
 	private final ScreenManager screenManager;
 	private final Game game;
-	private final StateMachine<PlayState, Object> fsm;
 	private final Dimension size;
+	private Court court;
+	private Paddle paddle[] = new Paddle[2];
+	private Ball ball;
 
 	public PlayScreen(ScreenManager screenManager, Game game, Dimension size) {
+		super(PlayState.class);
 		this.screenManager = screenManager;
 		this.game = game;
 		this.size = size;
-		fsm = createStateMachine();
-		fsm.getTracer().setLogger(Application.LOGGER);
-	}
-
-	private StateMachine<PlayState, Object> createStateMachine() {
-		return
+		getTracer().setLogger(Application.LOGGER);
 		//@formatter:off
-		StateMachine.beginStateMachine(PlayState.class, Object.class)
+		beginStateMachine()
 			.description("Pong")	
 			.initialState(INIT)
 	
@@ -80,9 +78,14 @@ public class PlayScreen extends Entity implements Lifecycle {
 		//@formatter:on
 	}
 
-	private Court court;
-	private Paddle paddle[] = new Paddle[2];
-	private Ball ball;
+	@Override
+	public void setVisible(boolean visible) {
+	}
+
+	@Override
+	public boolean visible() {
+		return true;
+	}
 
 	private void initEntities() {
 		court = new Court(size);
@@ -126,16 +129,11 @@ public class PlayScreen extends Entity implements Lifecycle {
 	}
 
 	@Override
-	public void init() {
-		fsm.init();
-	}
-
-	@Override
 	public void update() {
 		if (Keyboard.keyPressedOnce(KeyEvent.VK_M)) {
 			screenManager.selectMenuScreen();
 		}
-		fsm.update();
+		super.update();
 	}
 
 	@Override
@@ -153,8 +151,7 @@ public class PlayScreen extends Entity implements Lifecycle {
 		g.translate(0, -size.height / 2);
 		if (leftPlayerWins()) {
 			drawWinner(g, "Left Player wins!");
-		}
-		else if (rightPlayerWins()) {
+		} else if (rightPlayerWins()) {
 			drawWinner(g, "Right Player wins!");
 		}
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
@@ -183,8 +180,7 @@ public class PlayScreen extends Entity implements Lifecycle {
 		if (!isBallOutRight()) {
 			ball.tf.setPosition(paddle[0].tf.getX() + paddle[0].tf.getWidth(),
 					paddle[0].tf.getY() + paddle[0].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
-		}
-		else {
+		} else {
 			ball.tf.setPosition(paddle[1].tf.getX() - ball.tf.getWidth(),
 					paddle[1].tf.getY() + paddle[1].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
 		}
