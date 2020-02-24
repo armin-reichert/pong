@@ -1,10 +1,10 @@
 package de.amr.games.pong.ui.menu;
 
 import static de.amr.easy.game.Application.LOGGER;
-import static de.amr.games.pong.model.Game.PlayMode.Computer_Computer;
-import static de.amr.games.pong.model.Game.PlayMode.Computer_Player2;
-import static de.amr.games.pong.model.Game.PlayMode.Player1_Computer;
-import static de.amr.games.pong.model.Game.PlayMode.Player1_Player2;
+import static de.amr.games.pong.model.PongGame.PlayMode.Computer_Computer;
+import static de.amr.games.pong.model.PongGame.PlayMode.Computer_Player2;
+import static de.amr.games.pong.model.PongGame.PlayMode.Player1_Computer;
+import static de.amr.games.pong.model.PongGame.PlayMode.Player1_Player2;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,7 +16,7 @@ import java.awt.event.KeyEvent;
 import de.amr.easy.game.controller.Lifecycle;
 import de.amr.easy.game.input.Keyboard;
 import de.amr.easy.game.view.View;
-import de.amr.games.pong.model.Game.PlayMode;
+import de.amr.games.pong.model.PongGame.PlayMode;
 import de.amr.games.pong.ui.ScreenManager;
 import de.amr.statemachine.core.StateMachine;
 

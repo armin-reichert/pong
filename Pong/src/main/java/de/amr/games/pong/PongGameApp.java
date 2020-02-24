@@ -4,10 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import de.amr.easy.game.Application;
-import de.amr.easy.game.assets.Assets;
 import de.amr.easy.game.config.AppSettings;
-import de.amr.games.pong.model.Game;
-import de.amr.games.pong.model.Game.PlayMode;
+import de.amr.games.pong.model.PongGame;
+import de.amr.games.pong.model.PongGame.PlayMode;
 import de.amr.games.pong.ui.ScreenManager;
 import de.amr.games.pong.ui.menu.MenuScreen;
 import de.amr.games.pong.ui.play.PlayScreen;
@@ -23,7 +22,7 @@ public class PongGameApp extends Application implements ScreenManager {
 		launch(PongGameApp.class, args);
 	}
 
-	private Game game;
+	private PongGame game;
 	private MenuScreen menuScreen;
 	private PlayScreen playScreen;
 
@@ -36,10 +35,7 @@ public class PongGameApp extends Application implements ScreenManager {
 
 	@Override
 	public void init() {
-		game = new Game();
-		Assets.sound("plop.mp3");
-		Assets.sound("plip.mp3");
-		Assets.sound("out.mp3");
+		game = new PongGame();
 		selectMenuScreen();
 	}
 

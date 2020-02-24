@@ -20,7 +20,6 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 import de.amr.easy.game.Application;
-import de.amr.easy.game.assets.Assets;
 import de.amr.easy.game.controller.Lifecycle;
 import de.amr.easy.game.input.Keyboard;
 import de.amr.easy.game.view.View;
@@ -29,7 +28,7 @@ import de.amr.games.pong.entities.AutoPaddleRight;
 import de.amr.games.pong.entities.Ball;
 import de.amr.games.pong.entities.Court;
 import de.amr.games.pong.entities.Paddle;
-import de.amr.games.pong.model.Game;
+import de.amr.games.pong.model.PongGame;
 import de.amr.games.pong.ui.ScreenManager;
 import de.amr.statemachine.core.StateMachine;
 
@@ -41,13 +40,13 @@ import de.amr.statemachine.core.StateMachine;
 public class PlayScreen extends StateMachine<PlayState, Void> implements View, Lifecycle {
 
 	private final ScreenManager screenManager;
-	private final Game game;
+	private final PongGame game;
 	private final Dimension size;
 	private Court court;
 	private Paddle paddle[] = new Paddle[2];
 	private Ball ball;
 
-	public PlayScreen(ScreenManager screenManager, Game game, Dimension size) {
+	public PlayScreen(ScreenManager screenManager, PongGame game, Dimension size) {
 		super(PlayState.class);
 		this.screenManager = screenManager;
 		this.game = game;
@@ -69,8 +68,8 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 			.when(SERVING).then(PLAYING).onTimeout().act(this::serveBall)
 			.stay(PLAYING).condition(this::leftPaddleHitsBall).act(this::returnBallWithLeftPaddle)
 			.stay(PLAYING).condition(this::rightPaddleHitsBall).act(this::returnBallWithRightPaddle)
-			.when(PLAYING).then(SERVING).condition(this::isBallOutLeft).act(this::assignPointToRightPlayer)
-			.when(PLAYING).then(SERVING).condition(this::isBallOutRight).act(this::assignPointToLeftPlayer)
+			.when(PLAYING).then(SERVING).condition(this::isBallOutLeft).act(this::handleBallOutLeft)
+			.when(PLAYING).then(SERVING).condition(this::isBallOutRight).act(this::handleBallOutRight)
 			.when(PLAYING).then(GAME_OVER).condition(() -> leftPlayerWins() || rightPlayerWins())
 			.when(GAME_OVER).then(INIT).condition(() -> Keyboard.keyPressedOnce(KeyEvent.VK_SPACE))
 
@@ -215,12 +214,12 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 
 	private void returnBallWithLeftPaddle() {
 		ball.tf.setVelocityX(-ball.tf.getVelocityX());
-		Assets.sound("plop.mp3").play();
+		game.playSoundPlop();
 	}
 
 	private void returnBallWithRightPaddle() {
 		ball.tf.setVelocityX(-ball.tf.getVelocityX());
-		Assets.sound("plip.mp3").play();
+		game.playSoundPlip();
 	}
 
 	private boolean leftPlayerWins() {
@@ -231,11 +230,13 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 		return game.scoreRight == 11;
 	}
 
-	private void assignPointToLeftPlayer() {
+	private void handleBallOutRight() {
 		game.scoreLeft += 1;
+		game.playSoundOut();
 	}
 
-	private void assignPointToRightPlayer() {
+	private void handleBallOutLeft() {
 		game.scoreRight += 1;
+		game.playSoundOut();
 	}
 }
