@@ -78,15 +78,6 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 		//@formatter:on
 	}
 
-	@Override
-	public void setVisible(boolean visible) {
-	}
-
-	@Override
-	public boolean visible() {
-		return true;
-	}
-
 	private void initEntities() {
 		court = new Court(size);
 		ball = new Ball(12);
