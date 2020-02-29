@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 
+import de.amr.easy.game.assets.Assets;
 import de.amr.easy.game.controller.Lifecycle;
 import de.amr.easy.game.input.Keyboard;
 import de.amr.easy.game.view.View;
@@ -52,19 +53,27 @@ public class MenuScreen extends StateMachine<PlayMode, Void> implements View, Li
 		
 			.transitions()
 			
-				.when(Player1_Player2)	.then(Player1_Computer)	.condition(this::nextEntrySelected)
-				.when(Player1_Computer)	.then(Computer_Player2)	.condition(this::nextEntrySelected)
-				.when(Computer_Player2)	.then(Computer_Computer).condition(this::nextEntrySelected)
-				.when(Computer_Computer).then(Player1_Player2)	.condition(this::nextEntrySelected)
+				.when(Player1_Player2)	.then(Player1_Computer)	.condition(this::nextEntrySelected) .act(this::plip)
+				.when(Player1_Computer)	.then(Computer_Player2)	.condition(this::nextEntrySelected) .act(this::plip)
+				.when(Computer_Player2)	.then(Computer_Computer).condition(this::nextEntrySelected) .act(this::plip)
+				.when(Computer_Computer).then(Player1_Player2)	.condition(this::nextEntrySelected) .act(this::plip)
 				
-				.when(Player1_Player2)	.then(Computer_Computer).condition(this::prevEntrySelected)
-				.when(Computer_Computer).then(Computer_Player2)	.condition(this::prevEntrySelected)
-				.when(Computer_Player2)	.then(Player1_Computer)	.condition(this::prevEntrySelected)
-				.when(Player1_Computer)	.then(Player1_Player2)	.condition(this::prevEntrySelected)
+				.when(Player1_Player2)	.then(Computer_Computer).condition(this::prevEntrySelected) .act(this::plop)
+				.when(Computer_Computer).then(Computer_Player2)	.condition(this::prevEntrySelected) .act(this::plop)
+				.when(Computer_Player2)	.then(Player1_Computer)	.condition(this::prevEntrySelected) .act(this::plop)
+				.when(Player1_Computer)	.then(Player1_Player2)	.condition(this::prevEntrySelected) .act(this::plop)
 		
 		.endStateMachine();
 		//@formatter:on
 		getTracer().setLogger(LOGGER);
+	}
+
+	private void plip() {
+		Assets.sound("plip.mp3").play();
+	}
+
+	private void plop() {
+		Assets.sound("plop.mp3").play();
 	}
 
 	private boolean nextEntrySelected() {
@@ -73,15 +82,6 @@ public class MenuScreen extends StateMachine<PlayMode, Void> implements View, Li
 
 	private boolean prevEntrySelected() {
 		return Keyboard.keyPressedOnce(KeyEvent.VK_UP);
-	}
-
-	@Override
-	public void setVisible(boolean visible) {
-	}
-
-	@Override
-	public boolean visible() {
-		return true;
 	}
 
 	public void setBgColor(Color bgColor) {

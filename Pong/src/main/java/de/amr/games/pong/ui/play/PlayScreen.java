@@ -20,6 +20,7 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 import de.amr.easy.game.Application;
+import de.amr.easy.game.assets.Assets;
 import de.amr.easy.game.controller.Lifecycle;
 import de.amr.easy.game.input.Keyboard;
 import de.amr.easy.game.view.View;
@@ -214,12 +215,12 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 
 	private void returnBallWithLeftPaddle() {
 		ball.tf.setVelocityX(-ball.tf.getVelocityX());
-		game.playSoundPlop();
+		playSoundPlop();
 	}
 
 	private void returnBallWithRightPaddle() {
 		ball.tf.setVelocityX(-ball.tf.getVelocityX());
-		game.playSoundPlip();
+		playSoundPlip();
 	}
 
 	private boolean leftPlayerWins() {
@@ -232,11 +233,24 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 
 	private void handleBallOutRight() {
 		game.scoreLeft += 1;
-		game.playSoundOut();
+		playSoundOut();
 	}
 
 	private void handleBallOutLeft() {
 		game.scoreRight += 1;
-		game.playSoundOut();
+		playSoundOut();
 	}
+
+	private void playSoundPlip() {
+		Assets.sound("plip.mp3").play();
+	}
+
+	private void playSoundPlop() {
+		Assets.sound("plop.mp3").play();
+	}
+
+	private void playSoundOut() {
+		Assets.sound("out.mp3").play();
+	}
+
 }

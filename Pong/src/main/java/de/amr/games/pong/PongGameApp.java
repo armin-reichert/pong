@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import de.amr.easy.game.Application;
+import de.amr.easy.game.assets.Assets;
 import de.amr.easy.game.config.AppSettings;
 import de.amr.games.pong.model.PongGame;
 import de.amr.games.pong.model.PongGame.PlayMode;
@@ -35,6 +36,9 @@ public class PongGameApp extends Application implements ScreenManager {
 
 	@Override
 	public void init() {
+		Assets.sound("plop.mp3");
+		Assets.sound("plip.mp3");
+		Assets.sound("out.mp3");
 		game = new PongGame();
 		selectMenuScreen();
 	}
