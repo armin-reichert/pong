@@ -1,19 +1,17 @@
 package de.amr.games.pong.entities;
 
-import java.awt.event.KeyEvent;
-
 public class AutoPaddleRight extends Paddle {
 
 	private float ballRightY;
 
-	public AutoPaddleRight() {
-		super(KeyEvent.CHAR_UNDEFINED, KeyEvent.CHAR_UNDEFINED);
+	@Override
+	public void init() {
 	}
 
 	@Override
 	public void update() {
 		tf.setVelocityY(0);
-		float targetY = courtSize.height / 2 + tf.getHeight();
+		float targetY = maxY / 2 + tf.getHeight();
 		if (ball.tf.getVelocityX() > 0) {
 			computeBallPositionRight();
 			targetY = ballRightY;
@@ -29,11 +27,10 @@ public class AutoPaddleRight extends Paddle {
 
 	private void computeBallPositionRight() {
 		ballRightY = ball.tf.getY() + ball.tf.getHeight() / 2;
-		for (float x = ball.tf.getX(); x < courtSize.width - tf.getWidth()
-				- ball.tf.getWidth(); x += ball.tf.getVelocityX()) {
+		for (float x = ball.tf.getX(); x < maxX - tf.getWidth() - ball.tf.getWidth(); x += ball.tf.getVelocityX()) {
 			if (ballRightY < 0) {
 				ballRightY += ball.tf.getVelocityY();
-			} else if (ballRightY >= courtSize.height) {
+			} else if (ballRightY >= maxY) {
 				ballRightY -= ball.tf.getVelocityY();
 			}
 		}

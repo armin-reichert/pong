@@ -17,7 +17,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 import de.amr.easy.game.Application;
 import de.amr.easy.game.assets.Assets;
@@ -28,6 +27,7 @@ import de.amr.games.pong.entities.AutoPaddleLeft;
 import de.amr.games.pong.entities.AutoPaddleRight;
 import de.amr.games.pong.entities.Ball;
 import de.amr.games.pong.entities.Court;
+import de.amr.games.pong.entities.KeyControlledPaddle;
 import de.amr.games.pong.entities.Paddle;
 import de.amr.games.pong.model.PongGame;
 import de.amr.games.pong.ui.ScreenManager;
@@ -42,16 +42,16 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 
 	private final ScreenManager screenManager;
 	private final PongGame game;
-	private final Dimension size;
+	private final Dimension courtSize;
+	private final Paddle[] paddles = new Paddle[2];
 	private Court court;
-	private Paddle paddle[] = new Paddle[2];
 	private Ball ball;
 
-	public PlayScreen(ScreenManager screenManager, PongGame game, Dimension size) {
+	public PlayScreen(ScreenManager screenManager, PongGame game, Dimension courtSize) {
 		super(PlayState.class);
 		this.screenManager = screenManager;
 		this.game = game;
-		this.size = size;
+		this.courtSize = courtSize;
 		getTracer().setLogger(Application.LOGGER);
 		//@formatter:off
 		beginStateMachine()
@@ -79,44 +79,57 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	}
 
 	private void initEntities() {
-		court = new Court(size);
-		ball = new Ball(12);
-		ball.setColor(Color.YELLOW);
-		ball.setCourtSize(size);
+		court = new Court();
+		court.tf.setWidth(courtSize.width);
+		court.tf.setHeight(courtSize.height);
+		court.floorColor = Color.BLACK;
+		court.lineColor = Color.WHITE;
+		court.lineWidth = 5;
+
+		ball = new Ball();
+		ball.tf.setWidth(12);
+		ball.tf.setHeight(12);
+		ball.color = Color.YELLOW;
+		ball.maxY = courtSize.height;
+
 		switch (game.playMode) {
 		case Computer_Computer:
-			paddle[0] = new AutoPaddleLeft();
-			paddle[1] = new AutoPaddleRight();
+			paddles[0] = new AutoPaddleLeft();
+			paddles[1] = new AutoPaddleRight();
 			break;
 		case Computer_Player2:
-			paddle[0] = new AutoPaddleLeft();
-			paddle[1] = new Paddle(VK_UP, VK_DOWN);
+			paddles[0] = new AutoPaddleLeft();
+			paddles[1] = new KeyControlledPaddle(VK_UP, VK_DOWN);
 			break;
 		case Player1_Computer:
-			paddle[0] = new Paddle(VK_A, VK_Y);
-			paddle[1] = new AutoPaddleRight();
+			paddles[0] = new KeyControlledPaddle(VK_A, VK_Y);
+			paddles[1] = new AutoPaddleRight();
 			break;
 		case Player1_Player2:
-			paddle[0] = new Paddle(VK_A, VK_Y);
-			paddle[1] = new Paddle(VK_UP, VK_DOWN);
+			paddles[0] = new KeyControlledPaddle(VK_A, VK_Y);
+			paddles[1] = new KeyControlledPaddle(VK_UP, VK_DOWN);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown play mode: " + game.playMode);
 		}
-		IntStream.rangeClosed(0, 1).forEach(i -> {
-			paddle[i].setSize(15, 60);
-			paddle[i].setCourtSize(size);
-			paddle[i].setSpeed(5);
-			paddle[i].setColor(Color.LIGHT_GRAY);
-			paddle[i].setBall(ball);
-		});
+		for (Paddle paddle : paddles) {
+			paddle.tf.setWidth(15);
+			paddle.tf.setHeight(60);
+			paddle.maxX = courtSize.width;
+			paddle.maxY = courtSize.height;
+			paddle.speed = 5;
+			paddle.color = Color.LIGHT_GRAY;
+			paddle.ball = ball;
+		}
+		;
 		resetPaddles();
 	}
 
 	private void updateEntities() {
 		ball.update();
-		paddle[0].update();
-		paddle[1].update();
+		for (Paddle paddle : paddles) {
+			paddle.update();
+		}
 	}
 
 	@Override
@@ -131,15 +144,15 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	public void draw(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		court.draw(g);
-		paddle[0].draw(g);
-		paddle[1].draw(g);
+		paddles[0].draw(g);
+		paddles[1].draw(g);
 		ball.draw(g);
-		g.translate(0, size.height / 2);
+		g.translate(0, courtSize.height / 2);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial Black", Font.PLAIN, 28));
-		g.drawString("" + game.scoreLeft, size.width / 4, 0);
-		g.drawString("" + game.scoreRight, size.width * 3 / 4, 0);
-		g.translate(0, -size.height / 2);
+		g.drawString("" + game.scoreLeft, courtSize.width / 4, 0);
+		g.drawString("" + game.scoreRight, courtSize.width * 3 / 4, 0);
+		g.translate(0, -courtSize.height / 2);
 		if (leftPlayerWins()) {
 			drawWinner(g, "Left Player wins!");
 		} else if (rightPlayerWins()) {
@@ -151,14 +164,14 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	private void drawWinner(Graphics2D g, String text) {
 		g.setFont(new Font("Arial Black", Font.PLAIN, 28));
 		int w = g.getFontMetrics().stringWidth(text);
-		g.drawString(text, size.width / 2 - w / 2, size.height - 100);
+		g.drawString(text, courtSize.width / 2 - w / 2, courtSize.height - 100);
 	}
 
 	private void resetPaddles() {
-		paddle[0].tf.setX(0);
-		paddle[0].tf.centerY(size.height);
-		paddle[1].tf.setX(size.width - paddle[1].tf.getWidth());
-		paddle[1].tf.centerY(size.height);
+		paddles[0].tf.setX(0);
+		paddles[0].tf.centerY(courtSize.height);
+		paddles[1].tf.setX(courtSize.width - paddles[1].tf.getWidth());
+		paddles[1].tf.centerY(courtSize.height);
 	}
 
 	private void resetScores() {
@@ -169,11 +182,11 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	private void prepareService() {
 		resetPaddles();
 		if (!isBallOutRight()) {
-			ball.tf.setPosition(paddle[0].tf.getX() + paddle[0].tf.getWidth(),
-					paddle[0].tf.getY() + paddle[0].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
+			ball.tf.setPosition(paddles[0].tf.getX() + paddles[0].tf.getWidth(),
+					paddles[0].tf.getY() + paddles[0].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
 		} else {
-			ball.tf.setPosition(paddle[1].tf.getX() - ball.tf.getWidth(),
-					paddle[1].tf.getY() + paddle[1].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
+			ball.tf.setPosition(paddles[1].tf.getX() - ball.tf.getWidth(),
+					paddles[1].tf.getY() + paddles[1].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
 		}
 		ball.tf.setVelocity(0, 0);
 	}
@@ -193,15 +206,15 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	}
 
 	private boolean isBallOutRight() {
-		return ball.tf.getX() > size.width;
+		return ball.tf.getX() > courtSize.width;
 	}
 
 	private boolean leftPaddleHitsBall() {
-		return ball.tf.getVelocityX() <= 0 && paddle[0].collidesWith(ball);
+		return ball.tf.getVelocityX() <= 0 && paddles[0].collidesWith(ball);
 	}
 
 	private boolean rightPaddleHitsBall() {
-		return ball.tf.getVelocityX() >= 0 && paddle[1].collidesWith(ball);
+		return ball.tf.getVelocityX() >= 0 && paddles[1].collidesWith(ball);
 	}
 
 	private void returnBallWithLeftPaddle() {
@@ -243,5 +256,4 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	private void playSoundOut() {
 		Assets.sound("out.mp3").play();
 	}
-
 }
