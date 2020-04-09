@@ -218,6 +218,10 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	}
 
 	private void returnBallWithLeftPaddle() {
+		float rightEdge = paddles[0].tf.getX() + paddles[0].tf.getWidth();
+		if (ball.tf.getX() < rightEdge) {
+			ball.tf.setX(rightEdge);
+		}
 		ball.tf.setVelocityX(-ball.tf.getVelocityX());
 		playSoundPlop();
 	}
