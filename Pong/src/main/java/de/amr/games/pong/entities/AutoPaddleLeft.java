@@ -10,15 +10,15 @@ public class AutoPaddleLeft extends Paddle {
 
 	@Override
 	public void update() {
-		int targetY = maxY / 2 + tf.getHeight();
+		int targetY = maxY / 2 + tf.height;
 		if (ball.tf.getVelocityX() < 0) {
 			computeBallPositionLeft();
 			targetY = (int) ballLeftY;
 		}
-		float diff = tf.getY() + tf.getHeight() / 2 - targetY;
-		if (diff < -ball.tf.getWidth()) {
+		float diff = tf.y + tf.height / 2 - targetY;
+		if (diff < -ball.tf.width) {
 			tf.setVelocityY(speed);
-		} else if (diff > ball.tf.getWidth()) {
+		} else if (diff > ball.tf.width) {
 			tf.setVelocityY(-speed);
 		}
 		move();
@@ -26,8 +26,8 @@ public class AutoPaddleLeft extends Paddle {
 	}
 
 	private void computeBallPositionLeft() {
-		ballLeftY = ball.tf.getY() + ball.tf.getHeight() / 2;
-		for (float x = ball.tf.getX(); x > tf.getWidth() - 1; x += ball.tf.getVelocityX()) {
+		ballLeftY = ball.tf.y + ball.tf.height / 2;
+		for (float x = ball.tf.x; x > tf.width - 1; x += ball.tf.getVelocityX()) {
 			ballLeftY += ball.tf.getVelocityY();
 			if (ballLeftY < 0) {
 				ballLeftY += ball.tf.getVelocityY();

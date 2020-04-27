@@ -16,16 +16,16 @@ public abstract class Paddle extends Entity implements Lifecycle, View {
 
 	protected void move() {
 		tf.move();
-		if (tf.getY() < 0) {
-			tf.setY(0);
-		} else if (tf.getY() >= maxY - tf.getHeight()) {
-			tf.setY(maxY - tf.getHeight());
+		if (tf.y < 0) {
+			tf.y=(0);
+		} else if (tf.y >= maxY - tf.height) {
+			tf.y=(maxY - tf.height);
 		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(color);
-		g.fillRect((int) tf.getX(), (int) tf.getY(), tf.getWidth(), tf.getHeight());
+		g.fillRect((int) tf.x, (int) tf.y, tf.width, tf.height);
 	}
 }

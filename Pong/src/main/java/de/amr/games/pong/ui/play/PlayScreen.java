@@ -80,15 +80,15 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 
 	private void initEntities() {
 		court = new Court();
-		court.tf.setWidth(courtSize.width);
-		court.tf.setHeight(courtSize.height);
+		court.tf.width =(courtSize.width);
+		court.tf.height =(courtSize.height);
 		court.floorColor = Color.BLACK;
 		court.lineColor = Color.WHITE;
 		court.lineWidth = 5;
 
 		ball = new Ball();
-		ball.tf.setWidth(12);
-		ball.tf.setHeight(12);
+		ball.tf.width =(12);
+		ball.tf.height =(12);
 		ball.color = Color.YELLOW;
 		ball.maxY = courtSize.height;
 
@@ -113,8 +113,8 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 			throw new IllegalArgumentException("Unknown play mode: " + game.playMode);
 		}
 		for (Paddle paddle : paddles) {
-			paddle.tf.setWidth(15);
-			paddle.tf.setHeight(60);
+			paddle.tf.width =(15);
+			paddle.tf.height =(60);
 			paddle.maxX = courtSize.width;
 			paddle.maxY = courtSize.height;
 			paddle.speed = 5;
@@ -168,9 +168,9 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	}
 
 	private void resetPaddles() {
-		paddles[0].tf.setX(0);
+		paddles[0].tf.x=(0);
 		paddles[0].tf.centerY(courtSize.height);
-		paddles[1].tf.setX(courtSize.width - paddles[1].tf.getWidth());
+		paddles[1].tf.x=(courtSize.width - paddles[1].tf.width);
 		paddles[1].tf.centerY(courtSize.height);
 	}
 
@@ -182,11 +182,11 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	private void prepareService() {
 		resetPaddles();
 		if (!isBallOutRight()) {
-			ball.tf.setPosition(paddles[0].tf.getX() + paddles[0].tf.getWidth(),
-					paddles[0].tf.getY() + paddles[0].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
+			ball.tf.setPosition(paddles[0].tf.x + paddles[0].tf.width,
+					paddles[0].tf.y + paddles[0].tf.height / 2 - ball.tf.height / 2);
 		} else {
-			ball.tf.setPosition(paddles[1].tf.getX() - ball.tf.getWidth(),
-					paddles[1].tf.getY() + paddles[1].tf.getHeight() / 2 - ball.tf.getHeight() / 2);
+			ball.tf.setPosition(paddles[1].tf.x - ball.tf.width,
+					paddles[1].tf.y + paddles[1].tf.height / 2 - ball.tf.height / 2);
 		}
 		ball.tf.setVelocity(0, 0);
 	}
@@ -202,11 +202,11 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	}
 
 	private boolean isBallOutLeft() {
-		return ball.tf.getX() + ball.tf.getWidth() < 0;
+		return ball.tf.x + ball.tf.width < 0;
 	}
 
 	private boolean isBallOutRight() {
-		return ball.tf.getX() > courtSize.width;
+		return ball.tf.x > courtSize.width;
 	}
 
 	private boolean leftPaddleHitsBall() {
@@ -218,9 +218,9 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	}
 
 	private void returnBallWithLeftPaddle() {
-		float rightEdge = paddles[0].tf.getX() + paddles[0].tf.getWidth();
-		if (ball.tf.getX() < rightEdge) {
-			ball.tf.setX(rightEdge);
+		float rightEdge = paddles[0].tf.x + paddles[0].tf.width;
+		if (ball.tf.x < rightEdge) {
+			ball.tf.x=(rightEdge);
 		}
 		ball.tf.setVelocityX(-ball.tf.getVelocityX());
 		playSoundPlop();

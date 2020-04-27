@@ -19,11 +19,11 @@ public class Ball extends Entity implements Lifecycle, View {
 	@Override
 	public void update() {
 		tf.move();
-		if (tf.getY() <= 0) {
-			tf.setY(0);
+		if (tf.y <= 0) {
+			tf.y=(0);
 			tf.setVelocityY(-tf.getVelocityY());
-		} else if (tf.getY() + tf.getHeight() >= maxY) {
-			tf.setY(maxY - 1 - tf.getHeight());
+		} else if (tf.y + tf.height >= maxY) {
+			tf.y=(maxY - 1 - tf.height);
 			tf.setVelocityY(-tf.getVelocityY());
 		}
 	}
@@ -31,6 +31,6 @@ public class Ball extends Entity implements Lifecycle, View {
 	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(color);
-		g.fillOval((int) tf.getX(), (int) tf.getY(), tf.getWidth(), tf.getHeight());
+		g.fillOval((int) tf.x, (int) tf.y, tf.width, tf.height);
 	}
 }
