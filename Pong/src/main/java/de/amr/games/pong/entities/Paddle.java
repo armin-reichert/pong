@@ -5,8 +5,9 @@ import java.awt.Graphics2D;
 
 import de.amr.easy.game.controller.Lifecycle;
 import de.amr.easy.game.entity.Entity;
+import de.amr.easy.game.view.View;
 
-public abstract class Paddle extends Entity implements Lifecycle {
+public abstract class Paddle extends Entity implements Lifecycle, View {
 
 	public int speed;
 	public int maxX, maxY;

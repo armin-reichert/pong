@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import de.amr.easy.game.entity.Entity;
+import de.amr.easy.game.view.View;
 
-public class Court extends Entity {
+public class Court extends Entity implements View {
 
 	public Color floorColor;
 	public Color lineColor;
