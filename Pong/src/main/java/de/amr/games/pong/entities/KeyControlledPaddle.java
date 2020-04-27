@@ -19,11 +19,11 @@ public class KeyControlledPaddle extends Paddle {
 	@Override
 	public void update() {
 		if (Keyboard.keyDown(upKey)) {
-			tf.setVelocityY(-speed);
+			tf.vy = -speed;
 		} else if (Keyboard.keyDown(downKey)) {
-			tf.setVelocityY(speed);
+			tf.vy = speed;
 		}
 		move();
-		tf.setVelocityY(0);
+		tf.vy = 0;
 	}
 }

@@ -80,15 +80,15 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 
 	private void initEntities() {
 		court = new Court();
-		court.tf.width =(courtSize.width);
-		court.tf.height =(courtSize.height);
+		court.tf.width = (courtSize.width);
+		court.tf.height = (courtSize.height);
 		court.floorColor = Color.BLACK;
 		court.lineColor = Color.WHITE;
 		court.lineWidth = 5;
 
 		ball = new Ball();
-		ball.tf.width =(12);
-		ball.tf.height =(12);
+		ball.tf.width = (12);
+		ball.tf.height = (12);
 		ball.color = Color.YELLOW;
 		ball.maxY = courtSize.height;
 
@@ -113,8 +113,8 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 			throw new IllegalArgumentException("Unknown play mode: " + game.playMode);
 		}
 		for (Paddle paddle : paddles) {
-			paddle.tf.width =(15);
-			paddle.tf.height =(60);
+			paddle.tf.width = (15);
+			paddle.tf.height = (60);
 			paddle.maxX = courtSize.width;
 			paddle.maxY = courtSize.height;
 			paddle.speed = 5;
@@ -168,9 +168,9 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	}
 
 	private void resetPaddles() {
-		paddles[0].tf.x=(0);
+		paddles[0].tf.x = (0);
 		paddles[0].tf.centerY(courtSize.height);
-		paddles[1].tf.x=(courtSize.width - paddles[1].tf.width);
+		paddles[1].tf.x = (courtSize.width - paddles[1].tf.width);
 		paddles[1].tf.centerY(courtSize.height);
 	}
 
@@ -194,10 +194,10 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	private void serveBall() {
 		Random rnd = new Random();
 		int ballSpeed = 10;
-		ball.tf.setVelocityX(isBallOutRight() ? -ballSpeed : ballSpeed);
-		ball.tf.setVelocityY((ballSpeed / 4) + (rnd.nextFloat() * ballSpeed / 4));
+		ball.tf.vx = isBallOutRight() ? -ballSpeed : ballSpeed;
+		ball.tf.vy = (ballSpeed / 4) + (rnd.nextFloat() * ballSpeed / 4);
 		if (rnd.nextBoolean()) {
-			ball.tf.setVelocityY(-ball.tf.getVelocityY());
+			ball.tf.vy *= -1;
 		}
 	}
 
@@ -210,24 +210,24 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 	}
 
 	private boolean leftPaddleHitsBall() {
-		return ball.tf.getVelocityX() <= 0 && paddles[0].collidesWith(ball);
+		return ball.tf.vx <= 0 && paddles[0].collidesWith(ball);
 	}
 
 	private boolean rightPaddleHitsBall() {
-		return ball.tf.getVelocityX() >= 0 && paddles[1].collidesWith(ball);
+		return ball.tf.vx >= 0 && paddles[1].collidesWith(ball);
 	}
 
 	private void returnBallWithLeftPaddle() {
 		float rightEdge = paddles[0].tf.x + paddles[0].tf.width;
 		if (ball.tf.x < rightEdge) {
-			ball.tf.x=(rightEdge);
+			ball.tf.x = (rightEdge);
 		}
-		ball.tf.setVelocityX(-ball.tf.getVelocityX());
+		ball.tf.vx *= -1;
 		playSoundPlop();
 	}
 
 	private void returnBallWithRightPaddle() {
-		ball.tf.setVelocityX(-ball.tf.getVelocityX());
+		ball.tf.vx *= -1;
 		playSoundPlip();
 	}
 
