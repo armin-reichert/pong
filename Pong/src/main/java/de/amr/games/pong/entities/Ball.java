@@ -3,11 +3,9 @@ package de.amr.games.pong.entities;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import de.amr.easy.game.controller.Lifecycle;
-import de.amr.easy.game.entity.Entity;
-import de.amr.easy.game.view.View;
+import de.amr.easy.game.controller.GameObject;
 
-public class Ball extends Entity implements Lifecycle, View {
+public class Ball extends GameObject {
 
 	public int maxY;
 	public Color color;
