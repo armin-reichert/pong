@@ -7,7 +7,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.amr.games.pong</groupId>
 	<artifactId>Pong</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>Pong</name>
 	<description>Pong game</description>
 	<build>
@@ -40,12 +40,12 @@
 		<dependency>
 			<groupId>de.amr.easy.game</groupId>
 			<artifactId>EasyGame</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.amr.statemachine</groupId>
 			<artifactId>StateMachine</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 </project>
