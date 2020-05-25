@@ -2,6 +2,8 @@
 
 Pong game (using finite state machine)
 
+<img src="pong.png">
+
 The game controller:
 ```java
 StateMachine.beginStateMachine(PlayState.class, Object.class)
