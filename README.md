@@ -1,4 +1,4 @@
-# pong
+# Pong
 
 Pong game (using finite state machine)
 
