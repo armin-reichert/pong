@@ -3,7 +3,7 @@ package de.amr.games.pong.entities;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import de.amr.easy.game.controller.GameObject;
+import de.amr.easy.game.entity.GameObject;
 
 public abstract class Paddle extends GameObject {
 
