@@ -169,9 +169,9 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 
 	private void resetPaddles() {
 		paddles[0].tf.x = (0);
-		paddles[0].tf.centerY(courtSize.height);
+		paddles[0].tf.centerVertically(0, courtSize.height);
 		paddles[1].tf.x = (courtSize.width - paddles[1].tf.width);
-		paddles[1].tf.centerY(courtSize.height);
+		paddles[1].tf.centerVertically(0, courtSize.height);
 	}
 
 	private void resetScores() {
