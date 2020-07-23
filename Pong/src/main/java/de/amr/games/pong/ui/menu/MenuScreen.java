@@ -1,6 +1,5 @@
 package de.amr.games.pong.ui.menu;
 
-import static de.amr.easy.game.Application.LOGGER;
 import static de.amr.games.pong.model.PongGame.PlayMode.Computer_Computer;
 import static de.amr.games.pong.model.PongGame.PlayMode.Computer_Player2;
 import static de.amr.games.pong.model.PongGame.PlayMode.Player1_Computer;
@@ -65,7 +64,6 @@ public class MenuScreen extends StateMachine<PlayMode, Void> implements View, Li
 		
 		.endStateMachine();
 		//@formatter:on
-		getTracer().setLogger(LOGGER);
 	}
 
 	private void plip() {

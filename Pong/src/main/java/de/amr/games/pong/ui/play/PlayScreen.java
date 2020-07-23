@@ -18,7 +18,6 @@ import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-import de.amr.easy.game.Application;
 import de.amr.easy.game.assets.Assets;
 import de.amr.easy.game.controller.Lifecycle;
 import de.amr.easy.game.input.Keyboard;
@@ -52,7 +51,6 @@ public class PlayScreen extends StateMachine<PlayState, Void> implements View, L
 		this.screenManager = screenManager;
 		this.game = game;
 		this.courtSize = courtSize;
-		getTracer().setLogger(Application.LOGGER);
 		//@formatter:off
 		beginStateMachine()
 			.description("Pong")	
